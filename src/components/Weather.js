@@ -52,6 +52,24 @@ const Weather = () => {
     }
   };
 
+  const getWeatherSuggestions = (weatherDescription) => {
+    let suggestions = [];
+
+    if (weatherDescription.toLowerCase().includes("rain")) {
+      suggestions.push("Carry an umbrella.");
+      suggestions.push("Wear waterproof shoes.");
+    } else if (weatherDescription.toLowerCase().includes("snow")) {
+      suggestions.push("Dress warmly and wear a coat.");
+      suggestions.push("Drive safely on slippery roads.");
+    } else if (weatherDescription.toLowerCase().includes("clear")) {
+      suggestions.push("Wear sunscreen to protect from UV rays.");
+    } else if (weatherDescription.toLowerCase().includes("cloud")) {
+      suggestions.push("Carry a light jacket.");
+    }
+
+    return suggestions;
+  };
+
   return (
     <div className="weather-container">
       <input
@@ -73,6 +91,14 @@ const Weather = () => {
             src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
             alt="weather icon"
           />
+          <h3>Suggestions:</h3>
+          <ul>
+            {getWeatherSuggestions(weatherData.weather[0].description).map(
+              (suggestion, index) => (
+                <li key={index}>{suggestion}</li>
+              )
+            )}
+          </ul>
         </div>
       )}
       {forecastData && forecastData.list && (
